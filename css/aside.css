@@ -70,13 +70,13 @@
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-.author-Lavender {
+.author-Pecho {
   padding-bottom: 36px;
 }
-.author-Lavender a {
+.author-Pecho a {
   display: block;
 }
-.author-Lavender img {
+.author-Pecho img {
   margin: 0 auto;
   display: block;
   width: 140px;
@@ -86,7 +86,7 @@
   -o-transition: transform 0.2s ease;
   transition: transform 0.2s ease;
 }
-.author-Lavender img:hover {
+.author-Pecho img:hover {
   -webkit-transform: scale(1.1);
   -ms-transform: scale(1.1);
   -o-transform: scale(1.1);
