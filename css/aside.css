@@ -70,13 +70,13 @@
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-.author-avatar {
+.author-Lavender {
   padding-bottom: 36px;
 }
-.author-avatar a {
+.author-Lavender a {
   display: block;
 }
-.author-avatar img {
+.author-Lavender img {
   margin: 0 auto;
   display: block;
   width: 140px;
@@ -86,7 +86,7 @@
   -o-transition: transform 0.2s ease;
   transition: transform 0.2s ease;
 }
-.author-avatar img:hover {
+.author-Lavender img:hover {
   -webkit-transform: scale(1.1);
   -ms-transform: scale(1.1);
   -o-transform: scale(1.1);
