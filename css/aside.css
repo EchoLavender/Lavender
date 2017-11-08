@@ -70,13 +70,13 @@
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-.author-Pecho {
+.author-avatar {
   padding-bottom: 36px;
 }
-.author-Pecho a {
+.author-avatar a {
   display: block;
 }
-.author-Pecho img {
+.author-avatar img {
   margin: 0 auto;
   display: block;
   width: 140px;
@@ -86,7 +86,7 @@
   -o-transition: transform 0.2s ease;
   transition: transform 0.2s ease;
 }
-.author-Pecho img:hover {
+.author-avatar img:hover {
   -webkit-transform: scale(1.1);
   -ms-transform: scale(1.1);
   -o-transform: scale(1.1);
