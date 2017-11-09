@@ -1,190 +1,359 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
 <head>
-    <meta charset="UTF-8" />
-
-    
-
-    
-
-    <title>程序员的神奇编辑工具：Markdown | Lavender&#39;s blog</title>
-    <meta name="author" content="Lavender" />
-    <meta name="version" content="1.0.0" />
-    <meta name="keywords" content="" />
-    <meta name="description" content="（一）Markdown 简单语法作者 : Lavender 时间 : 2017.11.09
-
-是否还在为html排版或者各种标签混杂不清等而感到烦乱，各种标签混杂不清。那就使用Markdown吧
-”人生有很多坑，完全可以单脚一跃而过；可是大多数人，却偏偏要绕个大圈子。   对未知事物的恐惧，几乎是本能的反应吧？”——《Markdown 操作用户反馈》，沐沐周 
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
 
 
-1、首先要讲的是‘标题‘，也就是在标记语言HTML里面的&amp;lt;’h’&amp;gt;标签这里为什么要用到 ‘’ 把h包括起来呢？在「Markdown」里面，可以选择类似Atx形式的写法来进行，在行首插入1到6个 ‘ # ’,对应的标题则是1到6阶，例如：
-
-# 这是 H1
-## 这是 H2
-###### 这是H6
 
 
-如果你觉得有点不太习惯，你也可以选择类似&amp;lt;’div’&amp;gt;..&amp;lt;’/div’&amp;gt;这种闭合类Atx的形式，这纯粹这是美观用的，若觉得这样看上去舒适，你也可以在行尾加上’#’（行首的井字符的个数决定标题的阶数），例如：
-
-# 这是 H1 #
-## 这是 H2 ##
-### 这是 H3 ######
 
 
-2、其次到‘引用’、‘分割线’，对应的标签是&amp;lt;’br’&amp;gt;标签至于引用的标签，说实话，我也想知道…..在「Markdown」 标记区块应用中是使用类似 email 中用 ‘ &amp;gt; ‘ 的引用方式，如果你还熟悉在 email 信件中引言部分，你就知道怎么在「Markdown」 文件中建立一个区块引用，那会看起来像是你自己先断好行，然后在每行面前加上 ‘ &amp;gt; ‘ :
 
-&gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
-&gt; consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
-&gt; Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
-&gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisseid sem consectetuer libero luctus adipiscing." />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
-    <meta name="baidu-site-verification" content="F0CXvmUgA9" />
 
-    
-    <link rel="alternate" href="/atom.xml" title="Lavender&#39;s blog" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/favicon.png">
-    
 
-    <link rel="stylesheet" href="/css/style.css">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Markdown,Web," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="（一）Markdown 简单语法作者 : Lavender 时间 : 2017.11.09  是否还在为html排版或者各种标签混杂不清等而感到烦乱，各种标签混杂不清。那就使用Markdown吧”人生有很多坑，完全可以单脚一跃而过；可是大多数人，却偏偏要绕个大圈子。对未知事物的恐惧，几乎是本能的反应吧？”《Markdown 操作用户反馈》，沐沐周">
+<meta name="keywords" content="Markdown,Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="程序员的神奇编辑工具：Markdown">
+<meta property="og:url" content="http://yoursite.com/2017/11/09/Markdown/index.html">
+<meta property="og:site_name" content="Lavender&#39;s blog">
+<meta property="og:description" content="（一）Markdown 简单语法作者 : Lavender 时间 : 2017.11.09  是否还在为html排版或者各种标签混杂不清等而感到烦乱，各种标签混杂不清。那就使用Markdown吧”人生有很多坑，完全可以单脚一跃而过；可是大多数人，却偏偏要绕个大圈子。对未知事物的恐惧，几乎是本能的反应吧？”《Markdown 操作用户反馈》，沐沐周">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://d26dzxoao6i3hh.cloudfront.net/items/2643322w0T111R0b0S0u/%E9%BE%99%E7%8C%AB.jpg?v=760800a0">
+<meta property="og:updated_time" content="2017-11-09T21:53:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="程序员的神奇编辑工具：Markdown">
+<meta name="twitter:description" content="（一）Markdown 简单语法作者 : Lavender 时间 : 2017.11.09  是否还在为html排版或者各种标签混杂不清等而感到烦乱，各种标签混杂不清。那就使用Markdown吧”人生有很多坑，完全可以单脚一跃而过；可是大多数人，却偏偏要绕个大圈子。对未知事物的恐惧，几乎是本能的反应吧？”《Markdown 操作用户反馈》，沐沐周">
+<meta name="twitter:image" content="https://d26dzxoao6i3hh.cloudfront.net/items/2643322w0T111R0b0S0u/%E9%BE%99%E7%8C%AB.jpg?v=760800a0">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/09/Markdown/"/>
+
+
+
+
+
+  <title>程序员的神奇编辑工具：Markdown | Lavender's blog</title>
+  
+
+
+
+
+
+
+
+
 </head>
-<body>
 
-    <div class="app">
-        <header class="header clearfix">
-    <div id="nav" class="nav">
-    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
-    <nav class="nav-inner">
+  
+  
+    
+  
 
-        <li class="nav-item">
-            <a class="nav-link" href="/">首页</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/categories/front-end">记录</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/categories/back-end">笔记</a>
-        </li>
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
 
-        <li class="nav-item nav-item-tag">
-            <a id="nav-tag" class="nav-link" href="#">标签</a>
-            <div id="nav-tags" class="nav-tag-wrap">
-                <i class="nav-tag-arrow"></i>
-                
-  <div class="widget-wrap">
-    <h3 class="widget-title">
-        <i class="icon-tag vm"></i>
-        <span class="vm">Mot-clés</span>
-    </h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown-Web/">Markdown, Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/旅行-随笔/">旅行, 随笔</a></li></ul>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lavender's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
     </div>
+      
+        <p class="site-subtitle"></p>
+      
   </div>
 
-
-            </div>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="/archives">归档</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/atom.xml">订阅</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/about">关于</a>
-        </li>
-
-    </nav>
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
-    <aside id="aside" class="aside">
-    <div id="aside-mask" class="aside-mask"></div>
-    <div id="aside-inner" class="aside-inner">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+<nav class="site-nav">
+  
 
+  
+    <ul id="menu" class="menu">
+      
         
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
         
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
         
-        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
 
-        
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#（一）Markdown-简单语法"><span class="toc-number">1.</span> <span class="toc-text">（一）Markdown 简单语法</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#作者-Lavender-时间-2017-11-09"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">作者 : Lavender 时间 : 2017.11.09</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1、首先要讲的是‘标题‘，也就是在标记语言HTML里面的-lt-’h’-gt-标签"><span class="toc-number">1.1.</span> <span class="toc-text">1、首先要讲的是‘标题‘，也就是在标记语言HTML里面的<’h’>标签</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#这里为什么要用到-‘’-把h包括起来呢？"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">这里为什么要用到 ‘’ 把h包括起来呢？</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#在「Markdown」里面，可以选择类似Atx形式的写法来进行，在行首插入1到6个-‘-’-对应的标题则是1到6阶，例如："><span class="toc-number">1.1.1.</span> <span class="toc-text">在「Markdown」里面，可以选择类似Atx形式的写法来进行，在行首插入1到6个 ‘ # ’,对应的标题则是1到6阶，例如：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#如果你觉得有点不太习惯，你也可以选择类似-lt-’div’-gt-lt-’-div’-gt-这种闭合类Atx的形式，这纯粹这是美观用的，若觉得这样看上去舒适，你也可以在行尾加上’-’（行首的井字符的个数决定标题的阶数），例如："><span class="toc-number">1.1.2.</span> <span class="toc-text">如果你觉得有点不太习惯，你也可以选择类似<’div’>..<’/div’>这种闭合类Atx的形式，这纯粹这是美观用的，若觉得这样看上去舒适，你也可以在行尾加上’#’（行首的井字符的个数决定标题的阶数），例如：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2、其次到‘引用’、‘分割线’，对应的标签是-lt-’br’-gt-标签"><span class="toc-number">1.2.</span> <span class="toc-text">2、其次到‘引用’、‘分割线’，对应的标签是<’br’>标签</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#至于引用的标签，说实话，我也想知道…"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">至于引用的标签，说实话，我也想知道…..</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在「Markdown」-标记区块应用中是使用类似-email-中用-‘-gt-‘-的引用方式，如果你还熟悉在-email-信件中引言部分，你就知道怎么在「Markdown」-文件中建立一个区块引用，那会看起来像是你自己先断好行，然后在每行面前加上-‘-gt-‘"><span class="toc-number">1.3.</span> <span class="toc-text">在「Markdown」 标记区块应用中是使用类似 email 中用 ‘ > ‘ 的引用方式，如果你还熟悉在 email 信件中引言部分，你就知道怎么在「Markdown」 文件中建立一个区块引用，那会看起来像是你自己先断好行，然后在每行面前加上 ‘ > ‘ :</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#然后你会发现它实现的效果就是上述所示，如果你想偷懒的话，「Markdown」-也允许你偷懒只在整个段落的第一行最前面加上-："><span class="toc-number">1.3.1.</span> <span class="toc-text">然后你会发现它实现的效果就是上述所示，如果你想偷懒的话，「Markdown」 也允许你偷懒只在整个段落的第一行最前面加上 > ：</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#这是一个标题"><span class="toc-number"></span> <span class="toc-text">这是一个标题</span></a>
-        
-    </div>
-</aside>
+      
+    </ul>
+  
 
-</header>
+  
+</nav>
 
-        <div id="content" class="content"><article class="article" itemscope itemprop="blogPost">
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
     
-    <header class="article-header">
-        
-        <h1 itemprop="name">
-            程序员的神奇编辑工具：Markdown
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="/2017/11/09/Markdown/">
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/09/Markdown/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lavender">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lavender's blog">
+    </span>
+
     
-    <i class="icon-calendar"></i>
-    
-    <time datetime="2017-11-08T17:02:17.000Z" itemprop="datePublished">2017-11-09</time>
-</a>
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">程序员的神奇编辑工具：Markdown</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-09T01:02:17+08:00">
+                2017-11-09
+              </time>
+            
 
             
-<div class="article-tag-list">
-    <i class="icon-tag"></i>
-    <a class="article-tag-link" href="/tags/Markdown-Web/">Markdown, Web</a>
-</div>
 
+            
+          </span>
+
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/09/Markdown/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/09/Markdown/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+             <span id="/2017/11/09/Markdown/" class="leancloud_visitors" data-flag-title="程序员的神奇编辑工具：Markdown">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
 
         </div>
-    </header>
+      </header>
     
-    <section class="article-body markdown-body">
-        
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
         <h3 id="（一）Markdown-简单语法"><a href="#（一）Markdown-简单语法" class="headerlink" title="（一）Markdown 简单语法"></a>（一）Markdown 简单语法</h3><h6 id="作者-Lavender-时间-2017-11-09"><a href="#作者-Lavender-时间-2017-11-09" class="headerlink" title="作者 : Lavender 时间 : 2017.11.09"></a>作者 : Lavender 时间 : 2017.11.09</h6><hr>
 <blockquote>
-<p>是否还在为html排版或者各种标签混杂不清等而感到烦乱，各种标签混杂不清。<strong>那就使用Markdown吧</strong></p>
-<p><em>”人生有很多坑，完全可以单脚一跃而过；可是大多数人，却偏偏要绕个大圈子。</em><br>   <em>对未知事物的恐惧，几乎是本能的反应吧？”</em><br>——《Markdown 操作用户反馈》，沐沐周 </p>
+<p>是否还在为html排版或者各种标签混杂不清等而感到烦乱，各种标签混杂不清。<strong>那就使用Markdown吧</strong><br><em>”人生有很多坑，完全可以单脚一跃而过；可是大多数人，却偏偏要绕个大圈子。</em><br><em>对未知事物的恐惧，几乎是本能的反应吧？”</em><br><em>《Markdown 操作用户反馈》，沐沐周</em>  </p>
 </blockquote>
 <hr>
+<a id="more"></a>
 <h4 id="1、首先要讲的是‘标题‘，也就是在标记语言HTML里面的-lt-’h’-gt-标签"><a href="#1、首先要讲的是‘标题‘，也就是在标记语言HTML里面的-lt-’h’-gt-标签" class="headerlink" title="1、首先要讲的是‘标题‘，也就是在标记语言HTML里面的&lt;’h’&gt;标签"></a>1、首先要讲的是<strong>‘标题‘</strong>，也就是在标记语言HTML里面的&lt;’h’&gt;标签</h4><h6 id="这里为什么要用到-‘’-把h包括起来呢？"><a href="#这里为什么要用到-‘’-把h包括起来呢？" class="headerlink" title="这里为什么要用到 ‘’ 把h包括起来呢？"></a>这里为什么要用到 <strong>‘’</strong> 把h包括起来呢？</h6><h5 id="在「Markdown」里面，可以选择类似Atx形式的写法来进行，在行首插入1到6个-‘-’-对应的标题则是1到6阶，例如："><a href="#在「Markdown」里面，可以选择类似Atx形式的写法来进行，在行首插入1到6个-‘-’-对应的标题则是1到6阶，例如：" class="headerlink" title="在「Markdown」里面，可以选择类似Atx形式的写法来进行，在行首插入1到6个 ‘ # ’,对应的标题则是1到6阶，例如："></a>在「Markdown」里面，可以选择类似Atx形式的写法来进行，在行首插入1到6个 ‘ # ’,对应的标题则是1到6阶，例如：</h5><blockquote>
-<ul>
-<li># 这是 H1</li>
-<li>## 这是 H2</li>
-<li>###### 这是H6</li>
-</ul>
+<p> # 这是 H1<br> ## 这是 H2<br>  ###### 这是H6</p>
 </blockquote>
 <h5 id="如果你觉得有点不太习惯，你也可以选择类似-lt-’div’-gt-lt-’-div’-gt-这种闭合类Atx的形式，这纯粹这是美观用的，若觉得这样看上去舒适，你也可以在行尾加上’-’（行首的井字符的个数决定标题的阶数），例如："><a href="#如果你觉得有点不太习惯，你也可以选择类似-lt-’div’-gt-lt-’-div’-gt-这种闭合类Atx的形式，这纯粹这是美观用的，若觉得这样看上去舒适，你也可以在行尾加上’-’（行首的井字符的个数决定标题的阶数），例如：" class="headerlink" title="如果你觉得有点不太习惯，你也可以选择类似&lt;’div’&gt;..&lt;’/div’&gt;这种闭合类Atx的形式，这纯粹这是美观用的，若觉得这样看上去舒适，你也可以在行尾加上’#’（行首的井字符的个数决定标题的阶数），例如："></a>如果你觉得有点不太习惯，你也可以选择类似&lt;’div’&gt;..&lt;’/div’&gt;这种闭合类Atx的形式，这纯粹这是美观用的，若觉得这样看上去舒适，你也可以在行尾加上’#’（行首的井字符的个数决定标题的阶数），例如：</h5><blockquote>
-<ul>
-<li># 这是 H1 #</li>
-<li>## 这是 H2 ##</li>
-<li>### 这是 H3 ######</li>
-</ul>
+<p> # 这是 H1 #<br> ## 这是 H2 ##<br> ### 这是 H3 ######</p>
 </blockquote>
 <h4 id="2、其次到‘引用’、‘分割线’，对应的标签是-lt-’br’-gt-标签"><a href="#2、其次到‘引用’、‘分割线’，对应的标签是-lt-’br’-gt-标签" class="headerlink" title="2、其次到‘引用’、‘分割线’，对应的标签是&lt;’br’&gt;标签"></a>2、其次到‘引用’、‘分割线’，对应的标签是&lt;’br’&gt;标签</h4><h6 id="至于引用的标签，说实话，我也想知道…"><a href="#至于引用的标签，说实话，我也想知道…" class="headerlink" title="至于引用的标签，说实话，我也想知道….."></a>至于引用的标签，说实话，我也想知道…..</h6><h4 id="在「Markdown」-标记区块应用中是使用类似-email-中用-‘-gt-‘-的引用方式，如果你还熟悉在-email-信件中引言部分，你就知道怎么在「Markdown」-文件中建立一个区块引用，那会看起来像是你自己先断好行，然后在每行面前加上-‘-gt-‘"><a href="#在「Markdown」-标记区块应用中是使用类似-email-中用-‘-gt-‘-的引用方式，如果你还熟悉在-email-信件中引言部分，你就知道怎么在「Markdown」-文件中建立一个区块引用，那会看起来像是你自己先断好行，然后在每行面前加上-‘-gt-‘" class="headerlink" title="在「Markdown」 标记区块应用中是使用类似 email 中用 ‘ &gt; ‘ 的引用方式，如果你还熟悉在 email 信件中引言部分，你就知道怎么在「Markdown」 文件中建立一个区块引用，那会看起来像是你自己先断好行，然后在每行面前加上 ‘ &gt; ‘ :"></a>在「Markdown」 标记区块应用中是使用类似 <em>email</em> 中用 ‘ &gt; ‘ 的引用方式，如果你还熟悉在 <em>email</em> 信件中引言部分，你就知道怎么在「Markdown」 文件中建立一个区块引用，那会看起来像是你自己先断好行，然后在每行面前加上 ‘ &gt; ‘ :</h4><blockquote>
-<ul>
-<li>> This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,</li>
-<li>> consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.</li>
-<li>> Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</li>
-<li>> Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse<br>id sem consectetuer libero luctus adipiscing.</li>
-<li>(特殊字符，比如 > 可以在前加入反斜杆‘\‘ 来插入普通的符号）</li>
-</ul>
+<p> > This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,<br> > consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.<br> > Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.<br> > Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse<br>id sem consectetuer libero luctus adipiscing.<br> (特殊字符，比如 > 可以在前加入反斜杆‘\‘ 来插入普通的符号）</p>
 </blockquote>
 <h5 id="然后你会发现它实现的效果就是上述所示，如果你想偷懒的话，「Markdown」-也允许你偷懒只在整个段落的第一行最前面加上-："><a href="#然后你会发现它实现的效果就是上述所示，如果你想偷懒的话，「Markdown」-也允许你偷懒只在整个段落的第一行最前面加上-：" class="headerlink" title="然后你会发现它实现的效果就是上述所示，如果你想偷懒的话，「Markdown」 也允许你偷懒只在整个段落的第一行最前面加上 > ："></a>然后你会发现它实现的效果就是上述所示，如果你想偷懒的话，「Markdown」 也允许你偷懒只在整个段落的第一行最前面加上 > ：</h5><blockquote>
-<ul>
-<li>> This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,</li>
-<li>consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.</li>
-<li>Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</li>
-<li>Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse<br>id sem consectetuer libero luctus adipiscing.</li>
-</ul>
+<p> > This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,<br>    consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.<br>  Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.<br> Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse<br>id sem consectetuer libero luctus adipiscing.</p>
 </blockquote>
-<p><img src="http://upload-images.jianshu.io/upload\_images/19107-4a17a25a90d42a5e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="吃面条"></p>
+<p><img src="https://d26dzxoao6i3hh.cloudfront.net/items/2643322w0T111R0b0S0u/%E9%BE%99%E7%8C%AB.jpg?v=760800a0" alt="吃面条"></p>
 <p><a href="http://www.jianshu.con/p/d409bb2b5d6c" target="_blank" rel="external">好中文的样子</a></p>
 <blockquote>
 <p>“ 每位作者都应该学习 Markdown。“    ——王佩</p>
@@ -195,61 +364,523 @@
 <p><em>吹吹那热风，听听那冷雨，看哪，好中文的样子。</em></p>
 <hr>
 
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Markdown/" rel="tag"># Markdown</a>
+          
+            <a href="/tags/Web/" rel="tag"># Web</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/09/shujia/" rel="next" title="藏地旅行">
+                <i class="fa fa-chevron-left"></i> 藏地旅行
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="hypercomments_widget"></div>
+    </div>
+
+  
+
+
+
+        </div>
         
-    </section>
-</article>
-
-
-
-<div class="comments">
-    <div id="disqus_thread">
-        <p class="comment-tips">国内查看评论需要代理~</p>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
-    <script>
-    window.disqus_config = function () {
-        this.language = 'zh';
-        this.page.url = 'http://yoursite.com/2017/11/09/Markdown/';
-        this.page.title = '程序员的神奇编辑工具：Markdown';
-        this.page.identifier = '2017/11/09/Markdown/';
-    };
-    (function() { // DON'T EDIT BELOW THIS LINE
-        var d = document, s = d.createElement('script');
-        s.src = 'https://lavender.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Lavender</p>
+              <p class="site-description motion-element" itemprop="description">a private blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/echolavender" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:essiomartemis@icloud.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#（一）Markdown-简单语法"><span class="nav-number">1.</span> <span class="nav-text">（一）Markdown 简单语法</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#作者-Lavender-时间-2017-11-09"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">作者 : Lavender 时间 : 2017.11.09</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1、首先要讲的是‘标题‘，也就是在标记语言HTML里面的-lt-’h’-gt-标签"><span class="nav-number">1.1.</span> <span class="nav-text">1、首先要讲的是‘标题‘，也就是在标记语言HTML里面的<’h’>标签</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#这里为什么要用到-‘’-把h包括起来呢？"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">这里为什么要用到 ‘’ 把h包括起来呢？</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#在「Markdown」里面，可以选择类似Atx形式的写法来进行，在行首插入1到6个-‘-’-对应的标题则是1到6阶，例如："><span class="nav-number">1.1.1.</span> <span class="nav-text">在「Markdown」里面，可以选择类似Atx形式的写法来进行，在行首插入1到6个 ‘ # ’,对应的标题则是1到6阶，例如：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#如果你觉得有点不太习惯，你也可以选择类似-lt-’div’-gt-lt-’-div’-gt-这种闭合类Atx的形式，这纯粹这是美观用的，若觉得这样看上去舒适，你也可以在行尾加上’-’（行首的井字符的个数决定标题的阶数），例如："><span class="nav-number">1.1.2.</span> <span class="nav-text">如果你觉得有点不太习惯，你也可以选择类似<’div’>..<’/div’>这种闭合类Atx的形式，这纯粹这是美观用的，若觉得这样看上去舒适，你也可以在行尾加上’#’（行首的井字符的个数决定标题的阶数），例如：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、其次到‘引用’、‘分割线’，对应的标签是-lt-’br’-gt-标签"><span class="nav-number">1.2.</span> <span class="nav-text">2、其次到‘引用’、‘分割线’，对应的标签是<’br’>标签</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#至于引用的标签，说实话，我也想知道…"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">至于引用的标签，说实话，我也想知道…..</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在「Markdown」-标记区块应用中是使用类似-email-中用-‘-gt-‘-的引用方式，如果你还熟悉在-email-信件中引言部分，你就知道怎么在「Markdown」-文件中建立一个区块引用，那会看起来像是你自己先断好行，然后在每行面前加上-‘-gt-‘"><span class="nav-number">1.3.</span> <span class="nav-text">在「Markdown」 标记区块应用中是使用类似 email 中用 ‘ > ‘ 的引用方式，如果你还熟悉在 email 信件中引言部分，你就知道怎么在「Markdown」 文件中建立一个区块引用，那会看起来像是你自己先断好行，然后在每行面前加上 ‘ > ‘ :</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#然后你会发现它实现的效果就是上述所示，如果你想偷懒的话，「Markdown」-也允许你偷懒只在整个段落的第一行最前面加上-："><span class="nav-number">1.3.1.</span> <span class="nav-text">然后你会发现它实现的效果就是上述所示，如果你想偷懒的话，「Markdown」 也允许你偷懒只在整个段落的第一行最前面加上 > ：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#这是一个标题"><span class="nav-number"></span> <span class="nav-text">这是一个标题</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lavender</span>
+
+  
 </div>
 
-</div>
-        <footer class="footer">
-    Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/concise/" target="_blank">Concise</a>
-</footer>
-    </div>
 
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"></script>
-    <script type="text/javascript">
-        $(function() {
-            var nodes = {
-                nav: $('#nav'),
-                aside: $('#aside'),
-                navTags: $('#nav-tags')
-            };
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
-            $('#open-panel, #aside-mask').on('click', function() {
-                nodes.aside.toggleClass('panel-show');
-            });
-            $('#nav-tag').on('click', function(event) {
-                event.preventDefault();console.log(nodes.navTags.attr('class'))
-                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
-            })/*.hover(function() {
-                nodes.navTags.addClass('tag-show');
-            }, function() {
-                nodes.navTags.removeClass('tag-show');
-            });*/
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 97616, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 97616, xid: "2017/11/09/Markdown/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/97616/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("RSEMOMrqPOkQdyk0ysGmPeit-gzGzoHsz", "2vH9gjwjkzt9CJCWChSAudzD");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
         });
-    </script>
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
 
 </body>
 </html>
