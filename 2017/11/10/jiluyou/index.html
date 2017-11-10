@@ -92,7 +92,10 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-68f5cccc969316d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-cf8cb5077f75cbe1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-35d64a65f2d32ff6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-11-10T13:57:20.000Z">
+<meta property="og:image" content="https://attach.bbs.miui.com/forum/201604/19/153145pd0j4bky15hhq9z9.png">
+<meta property="og:image" content="https://attach.bbs.miui.com/forum/201604/19/153153xa0za2yx2n3nnymo.png">
+<meta property="og:image" content="https://attach.bbs.miui.com/forum/201604/23/114154qnl59ae9rn8jltj9.png.thumb.jpg">
+<meta property="og:updated_time" content="2017-11-10T14:13:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="极路由刷机教程">
 <meta name="twitter:description" content="极路由1s刷机教程.    0x00 前期准备 准备工具 : winscp, putty.u-boot : 系统引导分区(刷机之前必须刷入一个不死u-boot,后面用breed进行覆盖,避免刷砖).     至上年学期末起（以前是没有这个步骤的），「极路由」为了防止被用来开发第三方固件，出厂就设置了锁死root权限，所以第一件事就是刷开发者模式（用来获取root权限. .">
@@ -366,7 +369,15 @@ $ mtd write HC5661-uboot.bin u-boot
 </code></pre>
 <p>等待刷完     </p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1112615-35d64a65f2d32ff6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="刷完">.   </p>
-<p><strong>刷完之后</strong> 拔掉路由电源，按住后面reset键，按住不放，然后接电重启,进入breed管理界面</p>
+<p><strong>刷完之后</strong> 拔掉路由电源，按住后面reset键，按住不放，然后接电重启,进入breed管理界面 </p>
+<p><img src="https://attach.bbs.miui.com/forum/201604/19/153145pd0j4bky15hhq9z9.png" alt="breed"><br>如图所示，把下载好的固件点击上传   </p>
+<blockquote>
+<p>EEPROM 跟无线有关（跟一些底层有关，但出现在极路由上), 极路由需要上传这项，斐讯系列的暂时没出现   </p>
+</blockquote>
+<p><img src="https://attach.bbs.miui.com/forum/201604/19/153153xa0za2yx2n3nnymo.png" alt="上传">   </p>
+<p><strong><em>点击上传</em></strong><br><img src="https://attach.bbs.miui.com/forum/201604/23/114154qnl59ae9rn8jltj9.png.thumb.jpg" alt="上传加载">   </p>
+<p>然后在浏览器地址栏输入 <a href="192.168.1.1">「192.168.1.1」</a>，进入路由器后台，在设置中开启极客模式<br><a href="https://www.imwosz.com/index.php/archives/24/" target="_blank" rel="external">广东工业大学路由器使用Dr.com校园网</a>   </p>
+<p>参考地址： 简书<a href="http://www.jianshu.com/p/196a43b79c24" target="_blank" rel="external">http://www.jianshu.com/p/196a43b79c24</a></p>
 
       
     </div>
