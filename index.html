@@ -242,6 +242,153 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.lavender.xin/2018/03/09/python-threading模块/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lavender">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lavender's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/09/python-threading模块/" itemprop="url">python系列之threading 模块详解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-09T00:00:00+08:00">
+                2018-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/09/python-threading模块/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/03/09/python-threading模块/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+             <span id="/2018/03/09/python-threading模块/" class="leancloud_visitors" data-flag-title="python系列之threading 模块详解">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="0x00-前言-全局解释器锁（GIL）"><a href="#0x00-前言-全局解释器锁（GIL）" class="headerlink" title="0x00 前言-全局解释器锁（GIL）"></a>0x00 前言-全局解释器锁（GIL）</h2><p>首先在Python里面，代码的执行由Python虚拟机（也叫解释器主循环）来控制。Python在设计之初就考虑到要在主循环中，同时只有一个线程在执行，就像单CPU的系统中运行多个进程那样，内存中可以存放多个程序，但任意时刻，只有一个程序在CPU中运行。同样的，虽然Python解释器中可以“运行”多个线程，但在任意时刻，只有一个线程在解释器中运行。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/09/python-threading模块/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://blog.lavender.xin/2017/11/14/xuexi/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -483,7 +630,8 @@
 
       
         
-          <h3 id="（一）Markdown-简单语法"><a href="#（一）Markdown-简单语法" class="headerlink" title="（一）Markdown 简单语法"></a>（一）Markdown 简单语法</h3><h6 id="作者-Lavender-时间-2017-11-09"><a href="#作者-Lavender-时间-2017-11-09" class="headerlink" title="作者 : Lavender 时间 : 2017.11.09"></a>作者 : Lavender 时间 : 2017.11.09</h6><hr>
+          <h3 id="Markdown-简单语法"><a href="#Markdown-简单语法" class="headerlink" title="Markdown 简单语法"></a>Markdown 简单语法</h3><p><strong>作者 : Lavender 时间 : 2017.11.09.</strong></p>
+<hr>
 <blockquote>
 <p>是否还在为html排版或者各种标签混杂不清等而感到烦乱，各种标签混杂不清。<strong>那就使用Markdown吧</strong><br><em>”人生有很多坑，完全可以单脚一跃而过；可是大多数人，却偏偏要绕个大圈子。</em><br><em>对未知事物的恐惧，几乎是本能的反应吧？”</em><br><em>《Markdown 操作用户反馈》，沐沐周</em>  </p>
 </blockquote>
@@ -724,7 +872,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -737,7 +885,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -790,7 +938,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -855,12 +1003,11 @@
   
 
 
-
-
-
-
   
-  
+
+
+
+
 
 
 
@@ -900,12 +1047,7 @@
 
   
   
-    <script type="text/javascript" src="/lib/three/three.min.js"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
   
 
 

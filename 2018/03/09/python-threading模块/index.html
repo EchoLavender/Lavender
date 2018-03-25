@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="python,threading模块," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00 前言-全局解释器锁（GIL）首先在Python里面，代码的执行由Python虚拟机（也叫解释器主循环）来控制。Python在设计之初就考虑到要在主循环中，同时只有一个线程在执行，就像单CPU的系统中运行多个进程那样，内存中可以存放多个程序，但任意时刻，只有一个程序在CPU中运行。同样的，虽然Python解释器中可以“运行”多个线程，但在任意时刻，只有一个线程在解释器中运行。">
+<meta name="keywords" content="python,threading模块">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python系列之threading 模块详解">
+<meta property="og:url" content="http://blog.lavender.xin/2018/03/09/python-threading模块/index.html">
+<meta property="og:site_name" content="Lavender&#39;s blog">
+<meta property="og:description" content="0x00 前言-全局解释器锁（GIL）首先在Python里面，代码的执行由Python虚拟机（也叫解释器主循环）来控制。Python在设计之初就考虑到要在主循环中，同时只有一个线程在执行，就像单CPU的系统中运行多个进程那样，内存中可以存放多个程序，但任意时刻，只有一个程序在CPU中运行。同样的，虽然Python解释器中可以“运行”多个线程，但在任意时刻，只有一个线程在解释器中运行。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-25T14:55:47.879Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python系列之threading 模块详解">
+<meta name="twitter:description" content="0x00 前言-全局解释器锁（GIL）首先在Python里面，代码的执行由Python虚拟机（也叫解释器主循环）来控制。Python在设计之初就考虑到要在主循环中，同时只有一个线程在执行，就像单CPU的系统中运行多个进程那样，内存中可以存放多个程序，但任意时刻，只有一个程序在CPU中运行。同样的，虽然Python解释器中可以“运行”多个线程，但在任意时刻，只有一个线程在解释器中运行。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.lavender.xin/2018/03/09/python-threading模块/"/>
+
+
+
+
+
+  <title>python系列之threading 模块详解 | Lavender's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lavender's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.lavender.xin/2018/03/09/python-threading模块/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lavender">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lavender's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python系列之threading 模块详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-09T00:00:00+08:00">
+                2018-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/09/python-threading模块/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/03/09/python-threading模块/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+             <span id="/2018/03/09/python-threading模块/" class="leancloud_visitors" data-flag-title="python系列之threading 模块详解">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="0x00-前言-全局解释器锁（GIL）"><a href="#0x00-前言-全局解释器锁（GIL）" class="headerlink" title="0x00 前言-全局解释器锁（GIL）"></a>0x00 前言-全局解释器锁（GIL）</h2><p>首先在Python里面，代码的执行由Python虚拟机（也叫解释器主循环）来控制。Python在设计之初就考虑到要在主循环中，同时只有一个线程在执行，就像单CPU的系统中运行多个进程那样，内存中可以存放多个程序，但任意时刻，只有一个程序在CPU中运行。同样的，虽然Python解释器中可以“运行”多个线程，但在任意时刻，只有一个线程在解释器中运行。</p>
+<a id="more"></a>
+<p>对Python虚拟机的访问由全局解释器锁（global interpreter lock, GIL)来控制，正是这个锁能保证同一时刻只有一个线程在运行。在多线程环境中，Python虚拟机按一下方式执行：</p>
+<blockquote>
+<p>1.设置GIL<br>2.切换到一个线程去运行<br>3.运行：</p>
+<blockquote>
+<p>a.指定数量的字节码的指令，或者<br>b.线程主动让出控制(可以调用time.sleep(0),即线程挂起，释放CPU运行时间  </p>
+</blockquote>
+<p>4.把线程设置为睡眠状态<br>5.解锁GIL<br>6.再次重复以上的所有步骤。</p>
+</blockquote>
+<p>在调用外部代码（如C/C++扩展函数）的时候，GIL将会被锁定，直到这个函数结束为止（由于在这期间没有Python 的字节码被运行，所以不会做线程切换）。编写扩展的程序员可以主动解锁GIL。不过，Python 的开发人员不用担心在这些情况下你的Python 代码会被锁住。<br>例如，对所有面向I/O的（会调用内建操作系统C代码的）程序来说，GIL 会在这个I/O 调用之前被释放，以允许其他的线程在这个线程等待I/O 的时候运行。如果某线程你并未使用很多I/O操作，它会在自己的时间片内一直占用处理器（和GIL）。也就是说，I/O 密集型的Python程序比计算密集型的程序更能充分利用多线程环境的好处。    </p>
+<blockquote>
+<p>总结来说，对于I/O 密集型程序来说，<strong>多线程</strong>(<em>threading</em>)，或者<strong>协程</strong>(<em>gevent</em>) 可能是个不错的选择，但是如果对于 计算密集型程序，为了实现更好的并发性，需要的会是<strong>多进程</strong>(<em>multiprocessing</em>)。    </p>
+</blockquote>
+<h2 id="0x01-threading-模块的对象"><a href="#0x01-threading-模块的对象" class="headerlink" title="0x01 threading 模块的对象"></a>0x01 threading 模块的对象</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">对象                                                            描述</div><div class="line">-------------------------------------------------------------------------------------------------</div><div class="line">Thread                                  表示一个执行线程的对象</div><div class="line">                                               </div><div class="line">Lock                                    锁原语对象(和 thread 模块中的锁一样)</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">Rlock                                   可重入锁对象，使单一线程可以(再次)获得已持有的锁</div><div class="line"></div><div class="line">Condition                               条件变量对象，使得一个线程等待另一个线程满足特定的“条件”</div><div class="line">                                        比如改变状态或某个数值。</div><div class="line"></div><div class="line">Event                                   条件变量的通用版本，任意数量的线程等待某个事件的发生，在</div><div class="line">                                        该事件发生后所有线程将被激活。</div><div class="line">                                        </div><div class="line">Semaphore                               为线程间共享的有限资源提供了一个“计数器”，如果没有可用资源时会被阻塞</div><div class="line"></div><div class="line">BoundedSemaphore                        与 Semaphore 相似，不过它不允许超过初始值。</div><div class="line"></div><div class="line">Timer                                   与 thread 模块里面的相似, 不过它要在运行前等待一段时间。     </div><div class="line"></div><div class="line">Barrier                                 创建一个“障碍”，必须达到指定数量的线程后才可以继续。</div></pre></td></tr></table></figure>
+<blockquote>
+<p>在 threading 模块中 Thread 类是主要的执行对象，用来创建线程的类，而其他的模块对象则主要用于管理线程间的交流、同步，例如同步原语 Lock， Semaphore 等类。</p>
+</blockquote>
+<h2 id="0x02-利用-Thread-类创建线程"><a href="#0x02-利用-Thread-类创建线程" class="headerlink" title="0x02 利用 Thread 类创建线程"></a>0x02 利用 Thread 类创建线程</h2><p>在开始创建线程之前，先认识一下 Thread 类的属性和方法列表。  </p>
+<p><strong>Thread 对象数据属性</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">属性                                                          描述</div><div class="line">-------------------------------------------------------------------------------------------------</div><div class="line">name                                    线程名</div><div class="line"></div><div class="line">ident                                   线程的标示符</div><div class="line"></div><div class="line">daemon                                  布尔标志，表示这个线程是否是守护线程</div></pre></td></tr></table></figure>
+<p><strong>Thread 对象方法</strong>   </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">属性                                                          描述</div><div class="line">-------------------------------------------------------------------------------------------------</div><div class="line">__init__(group=None, target=None, name=None,          实例化一个线程对象，需要有一个可调用的target,以及</div><div class="line">args=(), kwargs=&#123;&#125;, verbose=None, daemon=None)        其参数args或kwargs。还可以传递name参数，而 daemon </div><div class="line">                                                      的值将会设定thread.daemon 属性/标志</div><div class="line">                                               </div><div class="line">start()                                               开始执行该线程</div><div class="line"></div><div class="line">run()                                                 定义线程功能的方法（通常在子类中被重写）</div><div class="line"></div><div class="line">join(timeout=None).                                   直至启动的线程终止之前一直挂起；除非给出了timeout(秒),</div><div class="line">                                                      否则会一直阻塞</div><div class="line">            </div><div class="line">getName()                                             返回线程名</div><div class="line"></div><div class="line">setName(name)                                         设定线程名，可以在子类中的构造函数中(__init__)定义</div><div class="line"></div><div class="line">is_alive()                                            布尔标志， 表示这个线程是否还存活</div></pre></td></tr></table></figure>
+<p><strong>从上面的对象来看，在创建一个新线程之前，我们需要认识到什么是守护线程，非守护线程，以及僵尸线程</strong></p>
+<blockquote>
+<p><strong>守护线程</strong>（ <em>Daemon Thread</em> ) <strong>:</strong> 可理解为后台启动一个子线程，主线程不需要等待子线程返回数据就可退出，可以用一个主线程作为调度器来同时监控多个守护线程。<br><strong>非守护线程</strong>（ <em>Non-Daemon Thread</em> ) <strong>:</strong> 即重要线程，主线程需要等待所有非守护线程结束后才能退出。<br><strong>僵尸线程</strong> （ <em>Zombile Thread</em>) <strong>:</strong> 暂时还没有弄清其产生的机制，但其产生有时会出现线程假死，导致主线程一直等待其结束而卡住。</p>
+</blockquote>
+<p>–<br><strong>创建线程的方法有三种（在《Python核心编程第3版中）：</strong></p>
+<blockquote>
+<ul>
+<li>创建 Thread 的实例， 传给它一个函数 。  </li>
+<li>创建 Thread 的实例， 传给它一个可调用的类实例 。  </li>
+<li>派生 Thread 的子类， 并创建子类的实例 。 </li>
+</ul>
+</blockquote>
+<p>–<br>a. 创建 Thread 的实例， 传给它一个函数:    </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python (后面省略不写)</span></div><div class="line"><span class="comment"># coding:utf-8</span></div><div class="line"></div><div class="line">import threading</div><div class="line">from time import sleep, ctime</div><div class="line">from random import randrange</div><div class="line"></div><div class="line">def foo(num, nesc):</div><div class="line">	<span class="built_in">print</span> <span class="string">"start the foo -"</span>, num, ctime()</div><div class="line">	sleep(nesc)</div><div class="line">	<span class="built_in">print</span> <span class="string">"foo done at "</span>, ctime(), <span class="string">"use &#123;nesc&#125; seconds \n"</span>.format(nesc=nesc)</div><div class="line"></div><div class="line">threads = []                 <span class="comment"># 定义一个 thread 集合，便于管理 thread   </span></div><div class="line">nesc_list = [randrange(2, 5) <span class="keyword">for</span> x <span class="keyword">in</span> xrange(randrange(1, 7))]       </div><div class="line"></div><div class="line"><span class="keyword">for</span> num , nesc <span class="keyword">in</span> zip(range(len(nesc_list)), nesc_list):</div><div class="line">	thos = threading.Thread(target=foo, args=(num, nesc))       <span class="comment"># 准备一个进程</span></div><div class="line">	threads.append(thos)                                        <span class="comment"># 将进程添加进 threads 集合中</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> thread <span class="keyword">in</span> threads:</div><div class="line">	thread.start()                    <span class="comment"># 启动所有进程</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> thread <span class="keyword">in</span> threads:</div><div class="line">	thread.join()                     <span class="comment"># wait for all threads to finish</span></div></pre></td></tr></table></figure>
+<p>–<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">逐行解释： (为了方便引用代码，没有加行数)</div><div class="line">1-2 行: 文件头，指定运行的程序为Python， 编码为 utf-8。</div><div class="line">4-6 行: 导入线程（threading）、时间（time）、随机数（random）模块。</div><div class="line">8-14 行: 定义一个函数，线程集（threads），以及要传入的参数变量。</div><div class="line">16-18 行: 准备线程，创建一个Thread实例，foo为所要调用的函数，num,nesc为函数foo的参数，同时将所有的Thread实例</div><div class="line">          添加进线程集（threads）里面</div><div class="line">20-24 行: 调用.start()方法来启动所有进程，.join()方法阻塞主线程剩余代码的执行，直至所有子线程执行完毕。</div></pre></td></tr></table></figure></p>
+<blockquote>
+<ul>
+<li>注意.join()方法必须在.start()方法后面运行，不然会报 RuntimeError 错误。如果害怕线程假死，可以加上 timeout 参数。</li>
+</ul>
+</blockquote>
+<p>–<br>b. 创建 Thread 的实例， 传给他一个可调用的类实例:    </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">import threading</div><div class="line">from time import sleep, ctime</div><div class="line">from random import randrange</div><div class="line"></div><div class="line"><span class="comment"># 定义一个可调用的类，并且在.__call__特殊方法中调用所需要的func</span></div><div class="line">class ThreadFunc(object):                    </div><div class="line">    def __init__(self, func, args, name=<span class="string">""</span>):</div><div class="line">        self.name = name</div><div class="line">        self.func = func</div><div class="line">        self.args = args</div><div class="line">        </div><div class="line">    def __call__(self):</div><div class="line">        self.func(*self.args)</div><div class="line">        </div><div class="line">def foo(num, nesc):            <span class="comment"># 上节定义的函数</span></div><div class="line">    <span class="built_in">print</span> <span class="string">"start the foo -"</span>, num, ctime()</div><div class="line">    sleep(nesc)</div><div class="line">    <span class="built_in">print</span> <span class="string">"foo done at "</span>, ctime(), <span class="string">"use &#123;nesc&#125; seconds \n"</span>.format(nesc=nesc)</div><div class="line">	</div><div class="line">threads = []                 <span class="comment"># 定义一个 thread 集合，便于管理 thread   </span></div><div class="line">nesc_list = [randrange(2, 5) <span class="keyword">for</span> x <span class="keyword">in</span> xrange(randrange(1, 7))]       </div><div class="line"></div><div class="line"><span class="keyword">for</span> num , nesc <span class="keyword">in</span> zip(range(len(nesc_list)), nesc_list):</div><div class="line">	thos = threading.Thread(target=ThreadFunc(foo, (num, nesc), foo.__name__ ))       <span class="comment"># 准备一个进程</span></div><div class="line">	threads.append(thos)                                        <span class="comment"># 将进程添加进 threads 集合中</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> thread <span class="keyword">in</span> threads:</div><div class="line">	thread.start()                    <span class="comment"># 启动所有进程</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> thread <span class="keyword">in</span> threads:</div><div class="line">	thread.join()                     <span class="comment"># wait for all threads to finish</span></div></pre></td></tr></table></figure>
+<p>–</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">逐行解释：(相对a.里面的例子，b.中添加了一个可调用的类(ThreadFunc),这里详讲可调用的类ThreadFunc)</div><div class="line">5-12 行: 定义了一个可调用的类（ThreadFunc），在构造函数(__init__)中传入三个变量（func, args, name），其中func</div><div class="line">         则是在__call__ 中被调用，用于在线程中启动，而 args 则是func()函数的变量.</div></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>这里需要强调的是在 threading.Thread 中，需要启动线程的函数，是交由 Thread 线程 来执行, 所以<code>threading.Thread(target=ThreadFunc(foo, (num, nesc), func.__name__))</code>中，ThreadFunc 作为 target 参数传入 threading.Thread(),而 threading.Thread 则进行调用 ThreadFunc(), 这里明明传入的是一个 类实例，为什么能调用呢，其实是因为ThreadFunc() 中含有一个__call__特殊函数，具体可参考:<a href="https://www.cnblogs.com/superxuezhazha/p/5793536.html" target="_blank" rel="external">Python的特殊函数call</a></li>
+</ul>
+</blockquote>
+<p>c. 派生 Thread 的子类，并创建子类的实例</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">import threading </div><div class="line">from time import sleep, ctime  </div><div class="line">from random import randrange</div><div class="line"></div><div class="line"><span class="comment"># 子类化 Thread</span></div><div class="line">class MyThread(threading.Thread): <span class="comment"># 直接继承threading.Thread</span></div><div class="line">    def __init__(self, func, args, name=<span class="string">""</span>):</div><div class="line">        threading.Thread.__init__(self)</div><div class="line">        self.name = name</div><div class="line">        self.func = func</div><div class="line">        self.args = args </div><div class="line">        </div><div class="line">    def getResult(self):</div><div class="line">        <span class="built_in">return</span> self.res    </div><div class="line">        </div><div class="line">    def run(self):</div><div class="line">        self.res = self.func(*self.args)</div><div class="line">        </div><div class="line">def foo(num, nesc):            <span class="comment"># 上节定义的函数</span></div><div class="line">    <span class="built_in">print</span> <span class="string">"start the foo -"</span>, num, ctime()</div><div class="line">    sleep(nesc)</div><div class="line">    <span class="built_in">print</span> <span class="string">"foo done at "</span>, ctime(), <span class="string">"use &#123;nesc&#125; seconds \n"</span>.format(nesc=nesc)</div><div class="line">	</div><div class="line">threads = []                 <span class="comment"># 定义一个 thread 集合，便于管理 thread   </span></div><div class="line">nesc_list = [randrange(2, 5) <span class="keyword">for</span> x <span class="keyword">in</span> xrange(randrange(1, 7))]</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">for</span> num , nesc <span class="keyword">in</span> zip(range(len(nesc_list)), nesc_list):</div><div class="line">	thos = MyThread(target=ThreadFunc(foo, (num, nesc), foo.__name__ ))       <span class="comment"># 准备一个进程</span></div><div class="line">	threads.append(thos)                                        <span class="comment"># 将进程添加进 threads 集合中</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> thread <span class="keyword">in</span> threads:</div><div class="line">	thread.start()                    <span class="comment"># 启动所有进程</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> thread <span class="keyword">in</span> threads:</div><div class="line">	thread.join()                     <span class="comment"># wait for all threads to finish</span></div></pre></td></tr></table></figure>
+<p>–</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">逐行解释:(和b.传入一个可调用的类相比)</div><div class="line">5-6 行: 这里是直接让类继承threading.Thread, 并在__init__中初始化了threading.Thread.__init__(self)</div><div class="line">13-14 行: 新增一个类函数getResult(self), 作用是可由外部调用线程返回的结果。</div></pre></td></tr></table></figure>
+<h2 id="0x03-同步原语-Lock、Rlock、Semaphore"><a href="#0x03-同步原语-Lock、Rlock、Semaphore" class="headerlink" title="0x03 同步原语(Lock、Rlock、Semaphore)"></a>0x03 同步原语(Lock、Rlock、Semaphore)</h2><p><strong>锁</strong>(<strong>Lock</strong>、<strong>Rlock</strong>) 是同步原语中的锁。锁的状态有两种：锁定和未锁定。而且它只支持两个函数：获得锁和释放锁。当多线程争夺锁时， 允许第一个获得锁的线程进入临界区，并执行代码。所有之后到达的线程将被阻塞，知道第一个线程结束，退出临界区，并释放锁。示例：   </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">import threading </div><div class="line">from time import sleep, ctime</div><div class="line"></div><div class="line">lock = threading.Lock() <span class="comment"># 定义一个锁</span></div><div class="line"></div><div class="line">def foo(num, nesc):</div><div class="line">    lock.acquire()                  <span class="comment"># 获得锁</span></div><div class="line">    <span class="built_in">print</span> <span class="string">"start the foo -"</span>, num, ctime()</div><div class="line">    lock.release()                 <span class="comment"># 释放锁</span></div><div class="line">    sleep(nesc)</div><div class="line">    lock.acquire()                 <span class="comment"># 获得锁 </span></div><div class="line">    <span class="built_in">print</span> <span class="string">"foo done at"</span>, ctime(), <span class="string">"use &#123;nesc&#125; seconds \n"</span>.format(nesc=nesc)</div><div class="line">    lock.release()                 <span class="comment"># 释放锁</span></div></pre></td></tr></table></figure>
+<p>–</p>
+<blockquote>
+<p><strong>可以</strong>看出首先我们定义的了一个锁，然后每次操作之前都会进行一次锁获取，来执行临界区的代码，这里临界区主要是输出语句，可能你会想为什么要两次获取锁，而不直接，从头到尾只获取一次锁。你需要明白的是临界区的代码执行是 原子的 ，没有其他线程可以进入临界区，这也就意味则，实际上执行完整段函数后，再交由下一个线程执行，已经等同于单线程。再回想一下，I/O 密集型程序的更适用于多线程、协程，而函数中涉及到I/O 操作，即让出CPU 时间的代码是<code>sleep(nesc)</code>,所以在这个等待的时间里，需要将 CPU 时间让给别的线程执行，以此来进行并发，提高代码的运行效率。   </p>
+</blockquote>
+<p>用上下文管理来操作锁，可以优化代码，以及免得忘记释放锁:   </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">import threading </div><div class="line">from time import sleep, ctime</div><div class="line"></div><div class="line">lock = threading.Lock()</div><div class="line">def foo(num, nesc):</div><div class="line">    with lock:</div><div class="line">        <span class="built_in">print</span> <span class="string">"start the foo- "</span>, num, ctime()</div><div class="line">    sleep(nesc)</div><div class="line">    with lock:</div><div class="line">        <span class="built_in">print</span> <span class="string">"foo done at"</span>, ctime(), <span class="string">"use &#123;nesc&#125; seconds \n"</span>.format(nesc=nesc)</div></pre></td></tr></table></figure>
+<p>–<br><strong>信号量(Semaphore、BoundedSemphore)</strong>:它是一个计数器，当设定一个初始值（5）时，相当于它有一个相当于初始值的资源，别的线程请求它的时候，资源便会消耗一个，变成了（4），如果有多个线程请求它，则会递减(3)、(2)、（1），当资源耗尽时，就会进行阻塞，等待其他获得资源的线程结束后释放资源。</p>
+<blockquote>
+<p>基于信号量的设定，我们可借由信号量来进行线程限制，代码示例如下:(在c.的基础上进行更改)</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">import threading </div><div class="line">from time import sleep, ctime  </div><div class="line">from random import randrange</div><div class="line"></div><div class="line"><span class="comment"># 子类化 Thread</span></div><div class="line">class MyThread(threading.Thread): <span class="comment"># 直接继承threading.Thread</span></div><div class="line">    def __init__(self, func, args, semaphore, name=<span class="string">""</span>):</div><div class="line">        threading.Thread.__init__(self)</div><div class="line">        self.name = name</div><div class="line">        self.func = func</div><div class="line">        self.args = args</div><div class="line">        self.semaphore = semaphore  </div><div class="line">        </div><div class="line">    def getResult(self):</div><div class="line">        <span class="built_in">return</span> self.res    </div><div class="line">        </div><div class="line">    def run(self):    	 </div><div class="line">        with self.semaphore:</div><div class="line">            self.res = self.func(*self.args)</div><div class="line">        </div><div class="line">def foo(num, nesc):            <span class="comment"># 上节定义的函数</span></div><div class="line">    <span class="built_in">print</span> <span class="string">"start the foo -"</span>, num, ctime()</div><div class="line">    sleep(nesc)</div><div class="line">    <span class="built_in">print</span> <span class="string">"foo done at "</span>, ctime(), <span class="string">"use &#123;nesc&#125; seconds \n"</span>.format(nesc=nesc)</div><div class="line">    </div><div class="line">threads = []                 <span class="comment"># 定义一个 thread 集合，便于管理 thread   </span></div><div class="line">nesc_list = [randrange(2, 5) <span class="keyword">for</span> x <span class="keyword">in</span> xrange(randrange(1, 7))]</div><div class="line">semaphore = threading.Semaphore(5) <span class="comment"># 这里设置信号量为5</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> num , nesc <span class="keyword">in</span> zip(range(len(nesc_list)), nesc_list):</div><div class="line">    thos = MyThread(target=ThreadFunc(foo, (num, nesc), semaphore, foo.__name__ )) <span class="comment"># 准备一个进程, 并传入信号量</span></div><div class="line">    threads.append(thos)                                        <span class="comment"># 将进程添加进 threads 集合中</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> thread <span class="keyword">in</span> threads:</div><div class="line">    thread.start()                    <span class="comment"># 启动所有进程</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> thread <span class="keyword">in</span> threads:</div><div class="line">    thread.join()                     <span class="comment"># wait for all threads to finish</span></div></pre></td></tr></table></figure>
+<p>–<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">逐行解释: (和c. 做比较)</div><div class="line">17-19 行: 在子类化 Thread 的时候，__init__里面已经初始化了信号量，在重写的 run() 的时候，用了with来调用信号量(self.semaphore)</div><div class="line">          就是每个线程运行前都会请求获得信号量的值，当其值为0时，则堵塞后来的线程的运行，等待其他线程释放信号量的值.</div><div class="line">28 行:    这里定义了一个信号量，同时设置信号量的值为5， 也就是最多只有五个线程可以同时运行。</div><div class="line">31 行:    这里启动一个线程的时候，传入信号量.</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>既然讲到了限制线程数（因为在多数情况下需要处理的任务都是在几十个以上，这时候如果时全部用 <code>for</code>来准备进程，同时启动的话，会造成大量线程，同时启动，这样不仅容易造成崩溃，还容易拖慢速度，线程卡死，得不偿失。），上述是用信号量（曲线）来限制线程数，其实官网有更好的限制线程数的模块 —— <strong>多进程模块(multiprocessing)</strong>. 而我们这里只讲解<code>multiprocessing</code>中的关于线程池的相关子模块<code>multiprocessing.dummy</code>, <strong>multiprocessing模块</strong>里面线程和进程的API接口是很类似的，所以可以快速的切换两者<strong>进程——线程</strong>。</p>
+<ul>
+<li>下面是<code>multioricessing.dummy</code> 来启用线程池的示例   </li>
+</ul>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">from multiprocessing.dummy import Pool as ThreadPool <span class="comment"># 这里引入的是multiprocessing.dummy </span></div><div class="line">from time imoprt ctime, sleep</div><div class="line">from random import randrange</div><div class="line"></div><div class="line">def foo(num, nesc):            <span class="comment"># 还是上节定义的函数</span></div><div class="line">    <span class="built_in">print</span> <span class="string">"start the foo -"</span>, num, ctime()</div><div class="line">    sleep(nesc)</div><div class="line">    <span class="built_in">print</span> <span class="string">"foo done at "</span>, ctime(), <span class="string">"use &#123;nesc&#125; seconds \n"</span>.format(nesc=nesc)</div><div class="line"></div><div class="line">nesc_list = [randrange(2, 5) <span class="keyword">for</span> x <span class="keyword">in</span> xrange(randrange(1, 7))]</div><div class="line">pool = ThreadPool(processes=4) <span class="comment"># 定义线程数为4, 绑定一个CPU核心</span></div><div class="line"></div><div class="line"><span class="comment"># 启动方法（第一种），较为方便的写法, threading 模块没有这种写法</span></div><div class="line">pool.map(foo, nesc_list)          <span class="comment"># 关于map() 函数的特性，可以去了解一下</span></div><div class="line">pool.close()                       </div><div class="line">pool.join()</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 启动方法 （第二种）</span></div><div class="line">pool.map_async(foo, nesc_list)       <span class="comment"># 上面的pool.map()是堵塞的，而pool.map_async()是不堵塞的写法</span></div><div class="line">pool.close()</div><div class="line">pool.join()</div><div class="line">(相关方法: result = pool.map_async(foo, nesc_list), result.ready() 判断线程是否启动, result.wait() 等待线程完成， </div><div class="line">          result.successful() 判断线程是否成功完成， result.get() 取得线程里面执行函数完成返回的值。)</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 启动方法（第二种）</span></div><div class="line">threads = []</div><div class="line"><span class="keyword">for</span> num , nesc <span class="keyword">in</span> zip(range(len(nesc_list)), nesc_list):</div><div class="line">    thos = pool.apply_async(foo, (nesc,))         <span class="comment"># apply_async 是非堵塞的写法，同理堵塞的写法是pool.apply()</span></div><div class="line">    threads.append(thos)</div><div class="line"><span class="keyword">for</span> thread <span class="keyword">in</span> threads:</div><div class="line">    thread.wait()                                 <span class="comment"># 等待线程执行完毕</span></div><div class="line">    </div><div class="line">pool.close()</div><div class="line">pool.join()</div></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>那关于多线程的并发的方法差不多介绍完毕了。下面写下另类的用法</li>
+</ul>
+</blockquote>
+<h2 id="0x04-基于线程来实现实时监控"><a href="#0x04-基于线程来实现实时监控" class="headerlink" title="0x04 基于线程来实现实时监控"></a>0x04 基于线程来实现实时监控</h2><p>上面第三小节已经讲完了多线程的实现方法，当然这也不会是多余的，也是很实用了，同时也在这里开辟一个小专栏，收集好用的写法:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">(暂时找不到好点的实例，大致写下写法)</div><div class="line">import threading</div><div class="line"></div><div class="line">Workthread = threading.Thread(target=work_func, args=(work_queue,))</div><div class="line">Workthread.daemon = True                          <span class="comment"># 设置为守护线程</span></div><div class="line">Workthread.start()                                <span class="comment"># 启动线程</span></div><div class="line"></div><div class="line"><span class="keyword">while</span> True:</div><div class="line">   <span class="keyword">if</span> not Workthread.is_alive():</div><div class="line">		Workthread = threading.Thread(traget=work_func, args=(work_queue,))</div><div class="line">		Workthread.daemon = True</div><div class="line">		Workthread.start()</div><div class="line">	<span class="keyword">else</span>: pass</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/threading模块/" rel="tag"># threading模块</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/14/xuexi/" rel="next" title="普通心理学：合作还是冲突">
+                <i class="fa fa-chevron-left"></i> 普通心理学：合作还是冲突
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="hypercomments_widget"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Lavender</p>
+              <p class="site-description motion-element" itemprop="description">a private blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/echolavender" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:essiomartemis@icloud.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-前言-全局解释器锁（GIL）"><span class="nav-number">1.</span> <span class="nav-text">0x00 前言-全局解释器锁（GIL）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-threading-模块的对象"><span class="nav-number">2.</span> <span class="nav-text">0x01 threading 模块的对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-利用-Thread-类创建线程"><span class="nav-number">3.</span> <span class="nav-text">0x02 利用 Thread 类创建线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-同步原语-Lock、Rlock、Semaphore"><span class="nav-number">4.</span> <span class="nav-text">0x03 同步原语(Lock、Rlock、Semaphore)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-基于线程来实现实时监控"><span class="nav-number">5.</span> <span class="nav-text">0x04 基于线程来实现实时监控</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lavender</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 97616, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 97616, xid: "2018/03/09/python-threading模块/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/97616/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("RSEMOMrqPOkQdyk0ysGmPeit-gzGzoHsz", "2vH9gjwjkzt9CJCWChSAudzD");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
